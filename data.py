@@ -17,7 +17,7 @@ data_logger.addHandler(log_handler)
 data_logger.propagate = False
 
 from models import create_tables, init_database, Command
-from import_ import event_logs
+from import_ import event_logs, vcode_logs
 from compute import choices, corrections, line_choices
 from migrate import run_migration
 from dump import choices as dump_choices, corrections as dump_corrections,\
@@ -29,7 +29,7 @@ COMMANDS = {
     'import': {
         'description': "Import data from logs.",
         'module_help': "Type of data to import.",
-        'modules': [event_logs],
+        'modules': [event_logs, vcode_logs],
     },
     'compute': {
         'description': "Compute derived fields from existing data.",

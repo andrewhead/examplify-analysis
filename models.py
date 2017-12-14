@@ -109,6 +109,22 @@ class Event(ProxyModel):
     data = TextField()
 
 
+class VcodeEvent(ProxyModel):
+    '''
+    An event from VCode annotations.  Refers to mostly the same
+    events as `Event`, but from a different source.
+    '''
+    # Keep a record of when this record was inserted
+    import_index = IntegerField(index=True)
+    date = DateTimeField(default=datetime.datetime.now)
+
+    participant_id = IntegerField(index=True)
+    label = TextField(index=True)
+    start_ms = IntegerField(index=True)
+    length_ms = IntegerField(index=True)
+    data = TextField(null=True)
+
+
 class Choice(ProxyModel):
     ''' A choice about whether or not to include code. '''
 
@@ -179,6 +195,7 @@ def create_tables():
     db_proxy.create_tables([
         Command,
         Event,
+        VcodeEvent,
         Choice,
         DefinitionCorrection,
         LineChoice,
