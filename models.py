@@ -135,6 +135,18 @@ class DefinitionCorrection(ProxyModel):
     correction_type = TextField(index=True)
 
 
+class LineChoice(ProxyModel):
+    ''' A click on a line number. '''
+
+    # Keep a record of when this record was inserted
+    compute_index = IntegerField(index=True)
+    date = DateTimeField(default=datetime.datetime.now)
+
+    participant_id = IntegerField(index=True)
+    time = DateTimeField(index=True)
+    line_number = IntegerField(index=True)
+
+
 def init_database(db_type, config_filename=None):
 
     if db_type == 'postgres':
@@ -169,4 +181,5 @@ def create_tables():
         Event,
         Choice,
         DefinitionCorrection,
+        LineChoice,
     ], safe=True)

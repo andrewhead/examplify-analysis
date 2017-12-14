@@ -1,3 +1,6 @@
+# Text editing artifacts
+*.sw*
+
 # Participant data
 data/
 bounds.py

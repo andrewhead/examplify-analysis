@@ -18,9 +18,11 @@ data_logger.propagate = False
 
 from models import create_tables, init_database, Command
 from import_ import event_logs
-from compute import choices, corrections
+from compute import choices, corrections, line_choices
 from migrate import run_migration
-from dump import choices as dump_choices
+from dump import choices as dump_choices, corrections as dump_corrections,\
+    final_corrections as dump_final_corrections, line_choices as dump_line_choices,\
+    events as dump_events
 
 
 COMMANDS = {
@@ -32,7 +34,7 @@ COMMANDS = {
     'compute': {
         'description': "Compute derived fields from existing data.",
         'module_help': "Type of data to compute.",
-        'modules': [choices, corrections],
+        'modules': [choices, corrections, line_choices],
     },
     'migrate': {
         'description':
@@ -44,7 +46,9 @@ COMMANDS = {
     'dump': {
         'description': "Dump data to a text file.",
         'module_help': "Type of data to dump.",
-        'modules': [dump_choices],
+        'modules': [
+            dump_choices, dump_corrections, dump_final_corrections, dump_line_choices,
+            dump_events],
     },
 }
 
