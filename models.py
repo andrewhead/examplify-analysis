@@ -124,6 +124,12 @@ class VcodeEvent(ProxyModel):
     length_ms = IntegerField(index=True)
     data = TextField(null=True)
 
+    # This flag should be set to `True` for all events that occur before
+    # a participant has "restarted" their session.  The only events
+    # for which this flag should be `False` is in a participant's last
+    # attempt to use the tool to make an example.
+    before_restart = BooleanField(null=True, index=True)
+
 
 class Choice(ProxyModel):
     ''' A choice about whether or not to include code. '''

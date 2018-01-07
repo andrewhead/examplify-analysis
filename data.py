@@ -22,7 +22,7 @@ from compute import choices, corrections, line_choices
 from migrate import run_migration
 from dump import choices as dump_choices, corrections as dump_corrections,\
     final_corrections as dump_final_corrections, line_choices as dump_line_choices,\
-    events as dump_events
+    events as dump_events, task_time as dump_task_time
 
 
 COMMANDS = {
@@ -48,7 +48,7 @@ COMMANDS = {
         'module_help': "Type of data to dump.",
         'modules': [
             dump_choices, dump_corrections, dump_final_corrections, dump_line_choices,
-            dump_events],
+            dump_events, dump_task_time],
     },
 }
 

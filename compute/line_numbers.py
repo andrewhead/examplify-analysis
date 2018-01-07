@@ -4,7 +4,7 @@ import json
 from models import Event, LineChoice
 
 
-def main(event_import_index=None, *args, **kwargs):
+def main(event_import_index=None, vcode_event_import_index, *args, **kwargs):
 
     last_compute_index = LineChoice.select(
         fn.Max(LineChoice.compute_index)).scalar() or 0
@@ -12,6 +12,8 @@ def main(event_import_index=None, *args, **kwargs):
 
     if not event_import_index:
         event_import_index = Event.select(fn.Max(Event.import_index)).scalar()
+    if not vcode_event_import_index:
+        vcode_event_import_index = VcodeEvent.select(fn.Max(VcodeEvent.import_index)).scalar()
 
     line_choices = Event.select().where(
         Event.import_index == event_import_index,
@@ -26,6 +28,13 @@ def main(event_import_index=None, *args, **kwargs):
             line_number=choice_data['lineNumber'],
         )
 
+    vcode_line_choices = VcodeEvent.select().where(
+        VcodeEvent.import_index == vcode_event_import_index,
+        VcodeEvent.label == "Add line",
+    )
+    for choice in vcode_line_choices:
+
+
 
 def configure_parser(parser):
     parser.description = "Extract all choices of lines to include in the example"
@@ -33,4 +42,9 @@ def configure_parser(parser):
         "--event-import-index",
         type=int,
         help="Version of imported events from which to extract choices."
+    )
+    parser.add_argument(
+        "--vcode-event-import-index",
+        type=int,
+        help="Version of imported VCode events from which to extract choices."
     )
